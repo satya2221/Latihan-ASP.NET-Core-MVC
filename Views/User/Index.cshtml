@@ -1,0 +1,38 @@
+﻿@using WebMVC.Models
+@model List<MstUser>
+@{
+    ViewData["Title"] = "All User Page";
+}
+<div>
+    <div class="d-flex justify-content-between align-items-center">
+        <h1>List Semua User</h1>
+        <a class="btn btn-primary" href="/User/FormTambahUser">Tambah User</a>
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">User Name</th>
+                <th scope="col">Pekerjaan</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var dataUser in Model)
+            {
+                <tr>
+                    <th scope="row">@dataUser.Id</th>
+                    <td>@dataUser.UserName</td>
+                    <td>@dataUser.Pekerjaan</td>
+                    <td>
+                        @* <a href="/User/FormEditUser/@dataUser.Id" class="btn btn-primary">Edit</a> *@
+                        <a asp-controller="User" asp-action="FormEditUser" asp-route-id="@dataUser.Id" class="btn btn-primary">Edit</a>
+                        <a href="/User/Deleteuser/@dataUser.Id" class="btn btn-danger">Delete</a>
+                    </td>
+                </tr>
+            }
+            
+        </tbody>
+    </table>
+</div>
