@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using WebMVC.Models;
-using WebMVC.Services.Interface;
+using WebMVC_DAL.Models;
+using WebMVC_DAL.Models.Dto.Req;
+using WebMVC_DAL.Repositories.Services.Interface;
 
 namespace WebMVC.Controllers
 {
@@ -24,10 +25,18 @@ namespace WebMVC.Controllers
         }
 
         [HttpPost]  
-        public IActionResult TambahUser(MstUser user)
+        public IActionResult TambahUser(ReqUserDto user)
         {
-            _service.AddUser(user);
-            return RedirectToAction("Index");
+            if (ModelState.IsValid)
+            {
+                _service.AddUser(user);
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                return BadRequest(ModelState);
+            }
+            
         }
 
         [HttpGet]
@@ -38,7 +47,7 @@ namespace WebMVC.Controllers
         }
 
         [HttpPost]
-        public IActionResult EditUser(MstUser user)
+        public IActionResult EditUser(ReqUserDto user)
         {
             _service.UpdateUser(user);
             return RedirectToAction("Index");
